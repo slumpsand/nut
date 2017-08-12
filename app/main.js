@@ -1,12 +1,11 @@
-import keyboard from "../engine/keyboard/index.js";
+import { Game } from "../engine/game.js";
 
-function start() {
-    
+export class MainApp extends Game {
+    constructor() {
+        super.constructor();
+    }
+
+    tick() {
+        super.tick();
+    }
 }
-
-function tick() {
-    
-}
-
-const app = { start, tick };
-export default app;
