@@ -1,4 +1,4 @@
-import config from "../engine/config.js";
+import config from "../config.js";
 
 let ctx;
 

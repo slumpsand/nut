@@ -1,6 +1,7 @@
 import config from "./config.js";
 
-import render from "../render/index.js";
+import render from "./render/index.js";
+import keyboard from "./keyboard/index.js";
 import app from "../app/main.js";
 
 render.prepare();
@@ -23,5 +24,7 @@ function keyup(evt) {
     if(evt.keyCode == 27) {
         clearInterval(tickIntervalId);
         console.log("[engine/index.js]: cleared tick interval ...");
+    } else {
+        keyboard.keyup(evt.keyCode);
     }
 }
