@@ -8,13 +8,19 @@ export class Game {
     config: Config;
     render: Render;
 
+    private tickIntervalId: number;
+
     run() {
         this.render = new Render(this.config);
 
         this.init();
         this.start();
 
-        setInterval(this.next(), 1000 / this.config.fps)
+        this.tickIntervalId = setInterval(this.next(), 1000 / this.config.fps);
+    }
+
+    stop() {
+        clearInterval(this.tickIntervalId);
     }
 
     private init() {

@@ -3,6 +3,7 @@ export class Config {
     height: number;
 
     fps: number;
+    backgroundColor: string;
 
     canvas: HTMLCanvasElement;
 }
