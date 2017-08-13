@@ -1,17 +1,21 @@
-import config from "../config";
+import { Engine } from "engine/Engine";
 
 export class Render {
     ctx: CanvasRenderingContext2D;
+    engine: Engine;
+    canvas: HTMLCanvasElement;
 
-    constructor(canvas: HTMLCanvasElement) {
-        canvas.width = config.canvas.width;
-        canvas.height = config.canvas.height;
+    constructor(canvas: HTMLCanvasElement, engine: Engine) {
+        this.engine = engine;
+        this.canvas = canvas;
+
+        canvas.width = this.engine.config.canvas.width;
+        canvas.height = this.engine.config.canvas.height;
 
         this.ctx = canvas.getContext("2d");
     }
 
     draw() {
-        this.ctx.fillStyle = "#0F0";
-        this.ctx.fillRect(10, 10, 100, 100);
+        console.log("[Render.ts]: drawing canvas ...");
     }
 }

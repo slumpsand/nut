@@ -4,6 +4,8 @@
 
     "files.exclude": {
         "**/.git": true,
-        "**/*.js": true
-    }
+        "**/*.js": { "when": "$(basename).ts" }
+    },
+
+    "tslint.enable": true
 }
