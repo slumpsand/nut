@@ -1,21 +1,22 @@
-import { Engine } from "../nut/Engine.js";
-import { EngineHelper } from "../nut/EngineHelper.js";
+import { Game } from "../nut/Game.js";
 
-const engine = new EngineHelper();
+const game = new Game();
 
-function start() {
-    
-}
+game.start = () => {
 
-function tick() {
+};
 
-}
+game.tick = () => {
 
-new Engine({
-    helper: engine,
+};
 
-    start,
-    tick,
+game.config = {
+    canvas: <HTMLCanvasElement> document.getElementById("canvas"),
 
-    canvas: <HTMLCanvasElement> document.getElementById("canvas")
-});
+    width: 800,
+    height: 480,
+
+    fps: 1
+};
+
+game.run();

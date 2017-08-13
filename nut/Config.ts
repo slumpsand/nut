@@ -1,9 +1,8 @@
-import { EngineHelper } from "./EngineHelper.js";
-
 export class Config {
-    start: () => void;
-    tick: () => void;
+    width: number;
+    height: number;
+
+    fps: number;
 
     canvas: HTMLCanvasElement;
-    helper: EngineHelper;
 }
