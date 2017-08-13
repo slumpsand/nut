@@ -1,11 +1,7 @@
-import { Game } from "../engine/game.js";
+export function start() {
+    
+}
 
-export class MainApp extends Game {
-    constructor() {
-        super.constructor();
-    }
+export function tick() {
 
-    tick() {
-        super.tick();
-    }
 }

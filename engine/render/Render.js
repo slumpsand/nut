@@ -9,7 +9,7 @@ export class Render {
     }
 
     draw() {
-        ctx.fillStyle = "#0F0";
-        ctx.fillRect(10, 10, 100, 100);
+        this.ctx.fillStyle = "#0F0";
+        this.ctx.fillRect(10, 10, 100, 100);
     }
 }
