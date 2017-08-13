@@ -1,5 +1,9 @@
 {
     "files.insertFinalNewline": true,
+    "editor.minimap.enabled": false,
 
-    "editor.minimap.enabled": false
+    "files.exclude": {
+        "**/.git": true,
+        "**/*.js": true
+    }
 }

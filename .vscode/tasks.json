@@ -14,7 +14,11 @@
             "type": "typescript",
             "tsconfig": "tsconfig.json",
 
-            "problemMatcher": "$tsc-watch"
+            "problemMatcher": "$tsc-watch",
+
+            "presentation": {
+                "reveal": "silent"
+            }
         }
     ]
 }
