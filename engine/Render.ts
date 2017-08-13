@@ -1,7 +1,9 @@
-import config from "../config.js";
+import config from "../config";
 
 export class Render {
-    constructor(canvas) {
+    ctx: CanvasRenderingContext2D;
+
+    constructor(canvas: HTMLCanvasElement) {
         canvas.width = config.canvas.width;
         canvas.height = config.canvas.height;
 

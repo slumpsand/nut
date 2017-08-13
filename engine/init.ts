@@ -1,5 +1,5 @@
-import { config, render, events } from "./init.js";
-import * as app from "../app/main.js";
+import { config, render, events } from "./engine";
+import * as app from "../app/main";
 
 app.start();
 

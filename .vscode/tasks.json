@@ -3,34 +3,18 @@
 
     "tasks": [
         {
-            "taskName": "Run in Browser",
-            "identifier": "run-in-browser",
-            "type": "shell",
-
+            "label": "Run TypeScript Compiler",
+            "identifier": "build-tsc",
+            
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            
-            "windows": {
-                "command": "start",
-                "args": [
-                    "firefox.exe",
-                    "file://${workspaceRoot}/start.html"
-                ]
-            },
-            "linux": {
-                "command": "firefox",
-                "args": [
-                    "file://${workspaceRoot}/start.html"
-                ]
-            },
 
-            "problemMatcher": [],
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
 
-            "presentation": {
-                "reveal": "never"
-            }
+            "problemMatcher": "$tsc-watch"
         }
     ]
 }
