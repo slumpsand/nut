@@ -16,11 +16,15 @@
             "taskName": "Open in Browser",
             "identifier": "open-in-browser",
             "type": "shell",
-            "command": "start",
-            "args": [
-                "firefox.exe",
-                "file://${workspaceRoot}/start.html"
-            ],
+
+            "windows": {
+                "command": "start",
+                "args": [
+                    "firefox.exe",
+                    "file://${workspaceRoot}/start.html"
+                ]                    
+            },
+            
             "problemMatcher": [],
 
             "presentation": {

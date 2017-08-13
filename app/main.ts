@@ -1,12 +1,21 @@
-import { Engine } from "../engine/Engine";
-const engine = new Engine(<HTMLCanvasElement>document.getElementById("canvas"), "config.json");
+import { Engine } from "../nut/Engine.js";
+import { EngineHelper } from "../nut/EngineHelper.js";
 
-engine.registry.game.registerStart(() => {
-    console.log("start call received");
+const engine = new EngineHelper();
+
+function start() {
+    
+}
+
+function tick() {
+
+}
+
+new Engine({
+    helper: engine,
+
+    start,
+    tick,
+
+    canvas: <HTMLCanvasElement> document.getElementById("canvas")
 });
-
-engine.registry.game.registerTick(() => {
-    console.log("tick call received");
-});
-
-engine.run();
