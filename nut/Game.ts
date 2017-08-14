@@ -1,5 +1,6 @@
 import { Config } from "./Config.js";
 import { Render } from "./Render.js";
+import { Assets } from "./Assets.js";
 
 export class Game {
     start: () => void;
@@ -7,11 +8,13 @@ export class Game {
 
     config: Config;
     render: Render;
+    assets: Assets;
 
     private tickIntervalId: number;
 
     run() {
         this.render = new Render(this.config);
+        this.assets = new Assets(this.config);
 
         this.init();
         this.start();
