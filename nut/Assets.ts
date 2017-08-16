@@ -1,32 +1,5 @@
 import { Config } from "./Config.js";
 
-class Action {
-    private isOk: boolean;
-
-    constructor(isOk: boolean) {
-        this.isOk = isOk;
-    }
-
-    static accept(): Action {
-        return new Action(true);
-    }
-
-    static deny(): Action {
-        return new Action(false);
-    }
-}
-
-function check(path: string, hasExtension: boolean): Promise<T> {
-    if(hasExtension && path.match(/[a-zA-Z_](?:[a-zA-Z0-9_])+(?:\.[a-z]+)?/).length > 0)
-        return Promise.resolve(undefined);
-
-    if(hasExtension) {
-        return ;
-    } else {
-        return path.match(/[a-zA-Z_](?:[a-zA-Z0-9_])+/).length > 0;
-    }
-}
-
 export class Assets {
 
     private config: Config;

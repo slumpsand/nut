@@ -1,23 +1,21 @@
-import { Game } from "../nut/Game.js";
+import { CreateGame } from "../nut/Game.js";
 
-const game = new Game();
-
-game.start = () => {
+let { game, config, render, assets } = CreateGame({
+        canvas: <HTMLCanvasElement> document.getElementById("canvas"),
+        
+        width: 800,
+        height: 480,
     
-};
+        fps: 30,
+        backgroundColor: "#424447"
+});
 
-game.tick = () => {
+function start(): void {
+    
+}
 
-};
+function tick(): void {
 
-game.config = {
-    canvas: <HTMLCanvasElement> document.getElementById("canvas"),
+}
 
-    width: 800,
-    height: 480,
-
-    fps: 30,
-    backgroundColor: "#424447"
-};
-
-game.run();
+game.run(start, tick);

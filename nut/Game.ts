@@ -12,11 +12,16 @@ export class Game {
 
     private tickIntervalId: number;
 
-    run() {
-        this.render = new Render(this.config);
-        this.assets = new Assets(this.config);
+    constructor(config: Config) {
+        this.config = config;
+        this.render = new Render(config);
+        this.assets = new Assets(config);
+    }
 
-        this.init();
+    run(start: () => void = this.start, tick: () => void = this.tick) {
+        this.start = start;
+        this.tick = tick;
+
         this.start();
 
         this.tickIntervalId = setInterval(this.next(), 1000 / this.config.fps);
@@ -26,10 +31,6 @@ export class Game {
         clearInterval(this.tickIntervalId);
     }
 
-    private init() {
-
-    }
-
     private next() {
         let ref = this;
         return () => {
@@ -37,4 +38,22 @@ export class Game {
             ref.render.draw();
         }
     }
+}
+
+export class GameInfo {
+    game: Game;
+    config: Config;
+    render: Render;
+    assets: Assets;
+}
+
+export function CreateGame(config: Config): GameInfo {
+    let game = new Game(config);
+
+    return {
+        game,
+        config: game.config,
+        render: game.render,
+        assets: game.assets
+    };
 }
