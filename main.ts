@@ -1,6 +1,7 @@
-import { CreateGame } from "./engine/Game.js";
+import { Game } from "./engine/Game.js";
+import { Layers } from "./engine/Layers.js";
 
-let { game, config, render, assets } = CreateGame({
+let game = new Game({
         canvas: <HTMLCanvasElement> document.getElementById("canvas"),
         
         width: 800,
@@ -10,12 +11,16 @@ let { game, config, render, assets } = CreateGame({
         backgroundColor: "#424447"
 });
 
-function start(): void {
+function start(game: Game): void {
     
 }
 
-function tick(): void {
+function tick(game: Game): void {
 
 }
 
-game.run(start, tick);
+function render(layers: Layers): void {
+
+}
+
+game.run(start, tick, render);

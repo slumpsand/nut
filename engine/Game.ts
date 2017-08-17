@@ -3,8 +3,9 @@ import { Render } from "./Render.js";
 import { Assets } from "./Assets.js";
 
 export class Game {
-    start: () => void;
-    tick: () => void;
+    startCallback: (Game) => void;
+    tickCallback: (Game) => void;
+    renderCallback: (Layers) => void;
 
     config: Config;
     render: Render;
@@ -18,11 +19,12 @@ export class Game {
         this.assets = new Assets(config);
     }
 
-    run(start: () => void = this.start, tick: () => void = this.tick) {
-        this.start = start;
-        this.tick = tick;
+    run(start: (Game) => void = this.startCallback, tick: (Game) => void = this.tickCallback, render: (Layers) => void = this.renderCallback) {
+        this.startCallback = start;
+        this.tickCallback = tick;
+        this.renderCallback = render;
 
-        this.start();
+        this.startCallback(this);
 
         this.tickIntervalId = setInterval(this.next(), 1000 / this.config.fps);
     }
@@ -34,26 +36,10 @@ export class Game {
     private next() {
         let ref = this;
         return () => {
-            ref.tick;
-            ref.render.draw();
+            ref.tickCallback(this);
+            ref.renderCallback(ref.render.layers);
+
+            ref.render.layers.apply();
         }
     }
-}
-
-export class GameInfo {
-    game: Game;
-    config: Config;
-    render: Render;
-    assets: Assets;
-}
-
-export function CreateGame(config: Config): GameInfo {
-    let game = new Game(config);
-
-    return {
-        game,
-        config: game.config,
-        render: game.render,
-        assets: game.assets
-    };
 }

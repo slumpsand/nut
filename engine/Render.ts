@@ -1,6 +1,9 @@
 import { Config } from "./Config.js";
+import { Layers } from "./Layers.js";
 
 export class Render {
+
+    layers: Layers;
 
     private config: Config;    
 
@@ -20,20 +23,9 @@ export class Render {
         this.canvas.height = config.height;
         this.ctx = this.canvas.getContext("2d");
 
+        this.layers = new Layers(this.ctx, config);
+
         this.config = config;
-    }
-
-    draw() {
-
-
-        this.commit();
-    }
-
-    private commit() {
-        this.output.drawImage(this.canvas, 0, 0);
-
-        this.ctx.fillStyle = this.config.backgroundColor;
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
 }
