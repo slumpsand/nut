@@ -7,5 +7,9 @@
         "**/*.js": true
     },
 
-    "tslint.enable": true
+    "tslint.enable": true,
+
+    "editor.tokenColorCustomizations": {
+        "comments": "#FF9900"
+    }
 }
