@@ -1,4 +1,4 @@
-import { CreateGame } from "../nut/Game.js";
+import { CreateGame } from "./engine/Game.js";
 
 let { game, config, render, assets } = CreateGame({
         canvas: <HTMLCanvasElement> document.getElementById("canvas"),
