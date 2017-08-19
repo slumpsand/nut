@@ -1,6 +1,6 @@
 import { Config } from "./Config.js";
-import { Render } from "./Render.js";
 import { Assets } from "./Assets.js";
+import { Layers } from "./Layers.js";
 
 export class Game {
     startCallback: (Game) => void;
@@ -8,15 +8,16 @@ export class Game {
     renderCallback: (Layers) => void;
 
     config: Config;
-    render: Render;
     assets: Assets;
+    layers: Layers;
 
     private tickIntervalId: number;
 
     constructor(config: Config) {
-        this.config = config;
-        this.render = new Render(config);
         this.assets = new Assets(config);
+        this.layers = new Layers(config);
+
+        this.config = config;        
     }
 
     run(start: (Game) => void = this.startCallback, tick: (Game) => void = this.tickCallback, render: (Layers) => void = this.renderCallback) {
@@ -36,10 +37,10 @@ export class Game {
     private next() {
         let ref = this;
         return () => {
-            ref.tickCallback(this);
-            ref.renderCallback(ref.render.layers);
+            ref.tickCallback(ref);
+            ref.renderCallback(ref.layers);
 
-            ref.render.layers.apply();
+            ref.layers.apply();
         }
     }
 }

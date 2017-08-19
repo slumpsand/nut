@@ -22,11 +22,17 @@ export class Layers {
     private config: Config;
     private ctx: CanvasRenderingContext2D;
 
-    constructor(ctx: CanvasRenderingContext2D, config: Config) {
+    constructor(config: Config) {
         // TODO: initialize the layers
-        this.layers = [];
+        this.layers = [ ];
 
-        this.ctx = ctx;
+        // setup the canvas
+        config.canvas.width = config.width;
+        config.canvas.height = config.height;
+        config.canvas.style.backgroundColor = config.backgroundColor;
+
+        this.ctx = config.canvas.getContext("2d");
+
         this.config = config;
     }
 
