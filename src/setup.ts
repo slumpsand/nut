@@ -1,6 +1,6 @@
 import { Game } from "../engine/Game.js";
 
-let instance = new Game({
+export const game = new Game({
         canvas: <HTMLCanvasElement> document.getElementById("canvas"),
         
         width: 800,
@@ -12,6 +12,7 @@ let instance = new Game({
         layerCount: 2
 });
 
-export const ui = instance.layer(1);
-export const game = instance.layer(0);
-export const setup = instance.run;
+export const ui = game.layer(1);
+export const main = game.layer(0);
+export const setup = game.run;
+export const asset = game.assets.asset;

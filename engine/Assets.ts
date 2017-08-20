@@ -8,25 +8,26 @@ export class Assets {
         return this.images[ident];
     }
 
-    getImage(ident: string): Promise<HTMLImageElement> {
-        if(!this.checkPath(ident))
-            return Promise.reject(`invalid image identifier '${ident}'`);
-        
-        if(ident in this.images)
-            return Promise.resolve(this.images[ident]);
+    getImage(ident: string) {
+        if(ident in this.images) return;
+        if(!this.checkPath(ident)) throw new Error(`invalid image identifier '${ident}'`);
 
-        let promise = fetch(`data/img/${ident}.png`)
-            .then((resp: Body) => resp.blob())
-            .then((blob: Blob) => {
-                let img = new Image();
-                img.src = URL.createObjectURL(blob);
+        this.complete = Promise.all([
+            this.complete,
+            fetch(`../data/img/${ident}.png`)
+                .then((resp: Body) => resp.blob())
+                .then((blob: Blob) => {
+                    let img = new Image();
+                    img.src = URL.createObjectURL(blob);
 
-                this.images[ident] = img;
-                return img;
-            });
+                    this.images[ident] = img;
+                    return img;
+                })
+        ]);
+    }
 
-        this.complete = Promise.all([this.complete, promise]);
-        return promise;
+    getImages(idents: string[]) {
+        idents.forEach(ident => this.getImage(ident));
     }
 
     private checkPath(path: string, hasExtension: boolean = false): boolean {

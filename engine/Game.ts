@@ -21,14 +21,16 @@ export class Game {
     run(start: Action, tick: Action, render: Action) {
         let apply = this.layers.apply;
 
-        start();
-
-        this.tickIntervalId = setInterval(() => {
-            tick();
-            render();
-            apply();
-
-        }, 1000 / this.config.fps);
+        this.assets.complete.then(() => {
+            start();
+            
+            this.tickIntervalId = setInterval(() => {
+                tick();
+                render();
+                apply();
+    
+            }, 1000 / this.config.fps);            
+        });
     }
 
     stop() {
