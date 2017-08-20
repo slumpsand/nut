@@ -2,10 +2,12 @@ import { Config } from "./Config.js";
 import { Assets } from "./Assets.js";
 import { Layers } from "./Layers.js";
 
+type Action = () => void;
+
 export class Game {
-    start: (Game) => void;
-    tick: (Game) => void;
-    render: (Layers) => void;
+    start: Action;
+    tick: Action;
+    render: Action;
 
     config: Config;
     assets: Assets;
@@ -20,12 +22,12 @@ export class Game {
         this.config = config;        
     }
 
-    run(start: (Game) => void = this.start, tick: (Game) => void = this.tick, render: (Layers) => void = this.render) {
+    run(start: Action, tick: Action, render: Action) {
         this.start = start;
         this.tick = tick;
         this.render = render;
 
-        this.start(this);
+        this.start();
 
         this.tickIntervalId = setInterval(this.next(), 1000 / this.config.fps);
     }
@@ -34,11 +36,15 @@ export class Game {
         clearInterval(this.tickIntervalId);
     }
 
+    layer(index: number): CanvasRenderingContext2D {
+        return this.layers.layers[index].ctx;
+    }
+
     private next() {
         let ref = this;
         return () => {
-            ref.tick(ref);
-            ref.render(ref.layers);
+            ref.tick();
+            ref.render();
 
             ref.layers.apply();
         }

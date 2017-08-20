@@ -6,4 +6,6 @@ export class Config {
     backgroundColor: string;
 
     canvas: HTMLCanvasElement;
+
+    layerCount: number;
 }

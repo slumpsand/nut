@@ -23,13 +23,13 @@ export class Layers {
     private ctx: CanvasRenderingContext2D;
 
     constructor(config: Config) {
-        // TODO: initialize the layers
-        this.layers = [ ];
+        this.layers = [];
+        for(let i=0; i<config.layerCount; i++) {
+            this.layers.push(new Layer(config));
+        }
 
-        // setup the canvas
         config.canvas.width = config.width;
         config.canvas.height = config.height;
-        config.canvas.style.backgroundColor = config.backgroundColor;
 
         this.ctx = config.canvas.getContext("2d");
 
