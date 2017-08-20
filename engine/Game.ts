@@ -5,10 +5,6 @@ import { Layers } from "./Layers.js";
 type Action = () => void;
 
 export class Game {
-    start: Action;
-    tick: Action;
-    render: Action;
-
     config: Config;
     assets: Assets;
     layers: Layers;
@@ -16,20 +12,23 @@ export class Game {
     private tickIntervalId: number;
 
     constructor(config: Config) {
-        this.assets = new Assets(config);
+        this.assets = new Assets();
         this.layers = new Layers(config);
 
         this.config = config;        
     }
 
     run(start: Action, tick: Action, render: Action) {
-        this.start = start;
-        this.tick = tick;
-        this.render = render;
+        let apply = this.layers.apply;
 
-        this.start();
+        start();
 
-        this.tickIntervalId = setInterval(this.next(), 1000 / this.config.fps);
+        this.tickIntervalId = setInterval(() => {
+            tick();
+            render();
+            apply();
+
+        }, 1000 / this.config.fps);
     }
 
     stop() {
@@ -38,15 +37,5 @@ export class Game {
 
     layer(index: number): CanvasRenderingContext2D {
         return this.layers.layers[index].ctx;
-    }
-
-    private next() {
-        let ref = this;
-        return () => {
-            ref.tick();
-            ref.render();
-
-            ref.layers.apply();
-        }
     }
 }

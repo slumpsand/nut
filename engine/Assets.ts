@@ -1,19 +1,32 @@
 import { Config } from "./Config.js";
 
 export class Assets {
+    complete: Promise<any> = Promise.resolve(undefined);
+    private images: { [id: string]: HTMLImageElement } = {};
 
-    private config: Config;
+    asset(ident: string): HTMLImageElement {
+        return this.images[ident];
+    }
 
-    private imageFiles: { [id: string]: Promise<HTMLImageElement> };
-    private jsonFiles: { [id: string]: Promise<any> };
-    private textFiles: { [id: string]: Promise<string> };
+    getImage(ident: string): Promise<HTMLImageElement> {
+        if(!this.checkPath(ident))
+            return Promise.reject(`invalid image identifier '${ident}'`);
+        
+        if(ident in this.images)
+            return Promise.resolve(this.images[ident]);
 
-    constructor(config: Config) {
-        this.imageFiles = {};
-        this.jsonFiles = {};
-        this.textFiles = {};
+        let promise = fetch(`data/img/${ident}.png`)
+            .then((resp: Body) => resp.blob())
+            .then((blob: Blob) => {
+                let img = new Image();
+                img.src = URL.createObjectURL(blob);
 
-        this.config = config;
+                this.images[ident] = img;
+                return img;
+            });
+
+        this.complete = Promise.all([this.complete, promise]);
+        return promise;
     }
 
     private checkPath(path: string, hasExtension: boolean = false): boolean {
@@ -23,71 +36,4 @@ export class Assets {
             return path.match(/[a-zA-Z_](?:[a-zA-Z0-9_])+/).length > 0;
         }
     }
-
-    getImage(ident: string): Promise<HTMLImageElement> {
-        if (!this.checkPath(ident)) {
-            return Promise.reject(`invalid image identifier '${ident}'`);
-        }
-
-        if(!(ident in this.imageFiles)) {
-            this.fetchImage(ident);
-        }
-
-        return this.imageFiles[ident];
-    }
-
-    private fetchImage(ident: string): void {
-        let path = `data/img/${ident}.png`;
-        console.log(`[Assets.ts]: fetching image file: '${path}'`);
-
-        this.imageFiles[ident] = fetch(path)
-            .then((resp: Body) => resp.blob())
-            .then((blob: Blob) => {
-                let img = new Image();
-                img.src = URL.createObjectURL(blob);
-
-                return img;
-            });
-    }
-
-    getJSON(ident: string): Promise<any> {
-        if (!this.checkPath(ident)) {
-            return Promise.reject(`invalid json identifier '${ident}'`);
-        }
-
-        if(!(ident in this.jsonFiles)) {
-            this.fetchJSON(ident);
-        }
-
-        return this.jsonFiles[ident];
-    }
-
-    private fetchJSON(ident: string): void {
-        let path = `data/json/${ident}.json`;
-        console.log(`[Assets.ts]: fetching json file: '${path}'`);
-
-        this.jsonFiles[ident] = fetch(path)
-            .then((resp: Body) =>  resp.json());
-    }
-
-    getText(ident: string): Promise<string> {
-        if(!this.checkPath(ident, true)) {
-            return Promise.reject(`invalid json identifier '${ident}'`);
-        }
-
-        if(!(ident in this.textFiles)) {
-            this.fetchText(ident);
-        }
-
-        return this.textFiles[ident];
-    }
-
-    private fetchText(ident: string): void {
-        let path = `data/any/${ident}`;
-        console.log(`[Assets.ts]: fetching text file: '${path}'`);
-
-        this.textFiles[ident] = fetch(path)
-            .then((resp: Body) => resp.text());
-    }
-
 }

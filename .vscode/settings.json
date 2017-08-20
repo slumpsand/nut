@@ -3,7 +3,8 @@
     "editor.minimap.enabled": false,
 
     "files.exclude": {
-        "**/.git": true
+        "**/.git": true,
+        "**/*.js": true
     },
 
     "tslint.enable": true,
